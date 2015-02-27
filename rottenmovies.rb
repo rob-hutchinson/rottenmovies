@@ -33,7 +33,7 @@ class Rottenmovies < Sinatra::Base
 
 
   get '/' do
-    erb :upcoming
+    erb :home
   end
 
    get '/users/login' do
@@ -41,6 +41,7 @@ class Rottenmovies < Sinatra::Base
   end
 
   post '/users/login' do
+    
     user = User.where(
       email:    params[:email],
       password: Digest::SHA1.hexdigest(params[:password])
@@ -53,7 +54,7 @@ class Rottenmovies < Sinatra::Base
       #   session.delete("return_trip")
       #   redirect to(path)
       # else
-      #   redirect to('/')
+      redirect to('/')
       # end
     else
       session[:error_message] = "Wrong. Try again."
