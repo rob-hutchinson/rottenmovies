@@ -33,7 +33,6 @@ class Rottenmovies < Sinatra::Base
 
 
   get '/' do
-
     erb :upcoming
   end
 
@@ -49,15 +48,15 @@ class Rottenmovies < Sinatra::Base
 
     if user
       session[:user_id] = user.id
-      if session["return_trip"]
-        path = session["return_trip"]
-        session.delete("return_trip")
-        redirect to(path)
-      else
-        redirect to('/')
-      end
+      # if session["return_trip"]
+      #   path = session["return_trip"]
+      #   session.delete("return_trip")
+      #   redirect to(path)
+      # else
+      #   redirect to('/')
+      # end
     else
-      session[:error_message] = "Invalid credentials. Try again."
+      session[:error_message] = "Wrong. Try again."
       status 422
       erb :login
     end
@@ -68,10 +67,20 @@ class Rottenmovies < Sinatra::Base
     redirect to('/')
   end
 
-
+  post '/create_account' do
+    # ensure_admin!
+    # raise "This doesn't work ... we mail the encrypted passwords"
+    begin
+      x = User.create!(name: params["name"], email: params["email"], password: Digest::SHA1.hexdigest(params[:password]))
+      session[:success_message] = "User account for #{x.name} created successfully. Account ID is #{x.id}."
+    rescue
+      session[:error_message] = "User creation failed. Please try again."
+    ensure
+      redirect '/create_account'
+    end
+  end
 
   get '/users' do
-
     erb :profile
   end
 
@@ -86,3 +95,5 @@ class Rottenmovies < Sinatra::Base
   end
 
 end
+
+Rottenmovies.run! if $PROGRAM_NAME == __FILE__
