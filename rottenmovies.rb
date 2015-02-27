@@ -8,7 +8,7 @@ require './lib/all'
 class Rottenmovies < Sinatra::Base
   
   get '/' do
-
+    @movies = Movie.all # restrict to current month at some point?
     erb :upcoming
   end
 
@@ -28,3 +28,5 @@ class Rottenmovies < Sinatra::Base
   end
 
 end
+
+Rottenmovies.run!
