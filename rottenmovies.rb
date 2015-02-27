@@ -67,7 +67,7 @@ class Rottenmovies < Sinatra::Base
     session.delete :user_id
     redirect to('/')
   end
-
+  
   post '/create_account' do
     # ensure_admin!
     # raise "This doesn't work ... we mail the encrypted passwords"
