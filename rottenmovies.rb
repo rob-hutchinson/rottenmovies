@@ -12,6 +12,7 @@ class Rottenmovies < Sinatra::Base
     return u
   end
 
+  # This is just for testing:
   def current_movie
     m = Movie.last
     return m
