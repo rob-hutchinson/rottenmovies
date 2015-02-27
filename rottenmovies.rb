@@ -7,6 +7,10 @@ require './lib/all'
 
 class Rottenmovies < Sinatra::Base
   
+  def current_user
+    u = User.first
+  end
+
   get '/' do
 
     erb :upcoming
@@ -17,8 +21,12 @@ class Rottenmovies < Sinatra::Base
     erb :profile
   end
 
-  get 'movies' do
+  get '/movies' do
+    erb :movie
+  end
 
+  post '/movies' do
+     current_user.add_comment params["comment_string"]
     erb :movie
   end
 
@@ -28,3 +36,5 @@ class Rottenmovies < Sinatra::Base
   end
 
 end
+
+Rottenmovies.run!
