@@ -71,8 +71,8 @@ class Rottenmovies < Sinatra::Base
     # ensure_admin!
     # raise "This doesn't work ... we mail the encrypted passwords"
     begin
-      x = User.create!(name: params["name"], email: params["email"], password: Digest::SHA1.hexdigest(params[:password]))
-      session[:success_message] = "User account for #{x.name} created successfully. Account ID is #{x.id}."
+     user = User.create!(name: params["name"], email: params["email"], password: Digest::SHA1.hexdigest(params[:password]))
+      session[:success_message] = "User account for #{user.name} created successfully. Account ID is #{user.id}."
     rescue
       session[:error_message] = "User creation failed. Please try again."
     ensure
