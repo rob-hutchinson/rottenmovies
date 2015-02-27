@@ -9,17 +9,17 @@ class Rottenmovies < Sinatra::Base
   
   get '/' do
 
-  erb :upcoming
+    erb :upcoming
   end
 
   get '/users' do
 
-  erb :profile
+    erb :profile
   end
 
   get 'movies' do
 
-  erb :movie
+    erb :movie
   end
 
   not_found do
