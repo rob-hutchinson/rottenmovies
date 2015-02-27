@@ -21,13 +21,13 @@ class Movie < ActiveRecord::Base
 
     count = 0
     total_movies = m["total"]
-
+    
     total_movies.times do
       movie_exists = Movie.find_by(rotten_id: m["movies"][count]["id"]) || nil
-      if movie_exists
+      unless movie_exists
         Movie.create!(
           title: m["movies"][count]["title"],
-          thumbnail: m["movies"][count]["posters"]["thumbnail"],
+          thumbnail: m["movies"][count]["posters"]["profile"],
           release_date: m["movies"][count]["release_dates"]["theater"],
           synopsis: m["movies"][count]["synopsis"],
           rotten_id: m["movies"][count]["id"]
