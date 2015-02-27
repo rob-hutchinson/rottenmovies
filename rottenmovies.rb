@@ -9,6 +9,12 @@ class Rottenmovies < Sinatra::Base
   
   def current_user
     u = User.first
+    return u
+  end
+
+  def current_movie
+    m = Movie.last
+    return m
   end
 
   get '/' do
@@ -26,7 +32,7 @@ class Rottenmovies < Sinatra::Base
   end
 
   post '/movies' do
-     current_user.add_comment params["comment_string"]
+    new_comment = Comment.create_comment!(params["comment_string"], current_user, current_movie)
     erb :movie
   end
 
