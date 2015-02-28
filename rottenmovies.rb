@@ -19,7 +19,7 @@ class Rottenmovies < Sinatra::Base
   end
 
   get '/' do
-
+    @movies = Movie.all # restrict to current month at some point?
     erb :upcoming
   end
 

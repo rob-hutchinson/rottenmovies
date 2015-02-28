@@ -1,0 +1,24 @@
+<div class="container">
+  
+  <table class="table table-bordered table-hover">
+    
+    <tr>
+      <td>
+        <img src="<%= @movies.first.thumbnail %>" />
+      </td>
+      <td>
+        <%= @movies.first.title %>
+      </td>
+      <td>
+        <%= @movies.first.rotten_id %>
+      </td>
+      <td>
+        <%= @movies.first.release_date %>
+      </td>
+      <td>
+        <%= @movies.first.synopsis %>
+      </td>
+    </tr>
+  </table>
+
+</div>
