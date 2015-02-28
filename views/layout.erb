@@ -1,8 +1,14 @@
 <html>
 <head>
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
-  <title>Rotten Movies</title>
-</head>
+      <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.2/superhero/bootstrap.min.css" rel="stylesheet">
+    <link href="rotten.css" rel="stylesheet">
+    <title>Rotten Movies</title>
+    <style>
+        body { 
+            background-color: #869896;
+        }
+    </style>
+  </head>
 <body>
   <div class="container">
     <div class="row">
@@ -47,8 +53,7 @@
       <% session.delete("success_message") %>
     </div>
   <% end %> 
-
+  
   <%= yield %>
-
   </body>
 </html>
