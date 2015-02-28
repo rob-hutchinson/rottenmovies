@@ -7,6 +7,17 @@ require './lib/all'
 
 class Rottenmovies < Sinatra::Base
   
+  def current_user
+    u = User.first
+    return u
+  end
+
+  # This is just for testing:
+  def current_movie
+    m = Movie.last
+    return m
+  end
+
   get '/' do
     @movies = Movie.all # restrict to current month at some point?
     erb :upcoming
@@ -17,8 +28,12 @@ class Rottenmovies < Sinatra::Base
     erb :profile
   end
 
-  get 'movies' do
+  get '/movies' do
+    erb :movie
+  end
 
+  post '/movies' do
+    new_comment = Comment.create_comment!(params["comment_string"], current_user, current_movie)
     erb :movie
   end
 
