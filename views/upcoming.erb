@@ -1,24 +1,43 @@
-<div class="container">
-  
-  <table class="table table-bordered table-hover">
-    
-    <tr>
-      <td>
-        <img src="<%= @movies.first.thumbnail %>" />
-      </td>
-      <td>
-        <%= @movies.first.title %>
-      </td>
-      <td>
-        <%= @movies.first.rotten_id %>
-      </td>
-      <td>
-        <%= @movies.first.release_date %>
-      </td>
-      <td>
-        <%= @movies.first.synopsis %>
-      </td>
-    </tr>
-  </table>
+<% if false %>
+<img src="<%= @movies.first.thumbnail %>" />
+<%= @movies.first.title %>
+<%= @movies.first.rotten_id %>
+<%= @movies.first.release_date %>
+<%= @movies.first.synopsis %>
+<% end %>
 
+<% @movies.each_slice(2) do |movie| %>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+      <div class="box">
+        <div class="box-icon">
+          <span><img src=<%= "#{movie.first.thumbnail}" %> /></span>
+        </div>
+        <div class="info">
+          <h4 class="text-center"><%= movie.first.title %></h4>
+          <h5 class="text-center"><em>Release Date: <%= movie.first.release_date %></em></h5>
+          <p><%= movie.first.synopsis %></p>
+          <a href=<%= "./movies/#{movie.first.rotten_id}" %> class="btn">Read more</a>
+        </div>
+      </div>
+    </div>
+
+    <% if movie.count == 2 %>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+      <div class="box">
+        <div class="box-icon">
+          <span><img src=<%= "#{movie.last.thumbnail}" %> /></span>
+        </div>
+        <div class="info">
+          <h4 class="text-center"><%= movie.last.title %></h4>
+          <h5 class="text-center"><em>Release Date: <%= movie.first.release_date %></em></h5>
+          <p><%= movie.last.synopsis %></p>
+          <a href=<%= "./movies/#{movie.last.rotten_id}" %> class="btn">Read more...</a>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  </div>
 </div>
+<% end %>

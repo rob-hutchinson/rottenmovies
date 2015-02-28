@@ -19,7 +19,9 @@ class Rottenmovies < Sinatra::Base
   end
 
   get '/' do
-    @movies = Movie.all # restrict to current month at some point?
+    # Movie.generate_upcoming_movie_list! 
+    # comment out if you need to generate a movie list.
+    @movies = Movie.all.order(release_date: :desc, title: :asc) # restrict to current month at some point?
     erb :upcoming
   end
 
