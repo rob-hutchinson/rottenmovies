@@ -111,8 +111,8 @@ class Rottenmovies < Sinatra::Base
   end
 
   post '/movies' do
-    new_comment = Comment.create_comment!(params["comment_string"], current_user, current_movie)
-    erb :movie
+    Comment.create!(comment: params["comment"], user_id: current_user.id, movie_id: params["movie_id"].to_i, title: params["title"])
+    redirect to "/movies/#{params['movie_rotten_id'].to_i}"
   end
 
   not_found do
