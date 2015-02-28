@@ -38,13 +38,10 @@ class Rottenmovies < Sinatra::Base
   #   end
   # end
 
-
-
    get '/users/login' do
     erb :login
   end
 
- 
   get '/' do
     # Movie.generate_upcoming_movie_list! 
     # comment out if you need to generate a movie list.
@@ -68,7 +65,7 @@ class Rottenmovies < Sinatra::Base
       redirect to('/')
       # end
     else
-      session[:error_message] = "Wrong. Try again."
+      session[:error_message] = "Nope. Try again."
       status 422
       erb :login
     end
@@ -84,11 +81,13 @@ class Rottenmovies < Sinatra::Base
   end
 
   post '/create_account' do
-    # ensure_admin!
-    # raise "This doesn't work ... we mail the encrypted passwords"
     begin
-      user = User.create!(name: params["name"], username: params["username"], email: params["email"], password: Digest::SHA1.hexdigest(params[:password]))
+      if User.find_by(username: params["username"]) || User.find_by(email: params["email"])
+        session[:error_message] = "User already exists."
+      else
+        user = User.create!(name: params["name"], username: params["username"], email: params["email"], password: Digest::SHA1.hexdigest(params[:password]))
         session[:success_message] = "User account for #{user.name} created successfully. Account ID is #{user.id}."
+      end
       rescue
         session[:error_message] = "User creation failed. Please try again."
       ensure
