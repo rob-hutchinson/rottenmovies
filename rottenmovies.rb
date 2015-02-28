@@ -105,6 +105,11 @@ class Rottenmovies < Sinatra::Base
     erb :movie
   end
 
+  post '/movies/:comment_id' do
+    c = Comment.find(:comment_id)
+    v = c.upvote! current_user
+  end
+
   not_found do
     status 404
     erb :nope
