@@ -23,7 +23,10 @@
       <div class="form-group">
         <label for="comment_form" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">Submit a comment</label>
           <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <input class="form-group" type="text" name="title" placeholder="Title of Post">
             <textarea class="form-control" rows=4 name="comment"></textarea>
+            <input type="hidden" name="movie_id" value=<%= @movie.id.to_s %>>
+            <input type="hidden" name="movie_rotten_id" value=<%= @movie.rotten_id.to_s %>>
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
       </div>
