@@ -1,0 +1,51 @@
+<div class="container">
+	<div class="col-sm-5">
+		<div class="row">
+			<div class="page-header">
+  			<h2>Spotibetical Profile: <small><%= current_user.name %></small></h2>
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<p class="lead"><strong>Email: </strong><%= current_user.email %></p>
+					<p class="lead"><strong>Home State: </strong><%= current_user.home_state %></p>
+					<p class="lead"><strong>Zodiac Sign: </strong><%= current_user.zodiac_sign %></p>
+
+					<hr>
+
+					<p class="lead"><%= current_user.bio %></p>
+
+					<hr>
+
+					<div style="padding: 2em 0em;">
+						<form method="get" action="/users/profile/edit"><button class="btn btn-info" type="submit">Edit Your Profile</button></form>
+						<form method="get" action="http://gph.to/1vxlvev"><button class="btn btn-warning" type="submit">Or Get Crazy</button></form>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-sm-offset-1 col-md-2">
+			<div class="row">
+
+				<div class="page-header">
+	  			<h2>Actions left:<small></small></h2>
+				</div>
+				<div class="panel panel-default">
+					<ul class="list-group">
+					  <li class="list-group-item"><span class="badge"><%= current_user.vote_count %></span>Votes left</li>
+						<li class="list-group-item"><span class="badge"><%= current_user.veto_count %></span>Vetos left</li>
+					</ul>
+				</div>
+		</div>
+	</div>
+
+	<div class="col-md-4">
+		<div class="page-header">
+			<h2>Your Favorite Movie:<small></small></h2>
+		</div>
+
+	</div>
+</div>

@@ -106,7 +106,8 @@ class Rottenmovies < Sinatra::Base
   end
 
   patch '/movies' do
-    current_comment = current_user.comments.find_by(params["id"])
+    u = current_user
+    current_comment = u.comments.find_by(params["id"])
     current_comment.edit_comment params["comment"]
   end
 
