@@ -4,4 +4,10 @@ class Comment < ActiveRecord::Base
 
   has_many :upvotes
 
+  def edit_comment new_comment
+    if new_comment != self.comment
+      self.update! comment: new_comment
+    end
+  end
+
 end
