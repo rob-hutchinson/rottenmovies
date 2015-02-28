@@ -30,5 +30,15 @@ class UserTest < MiniTest::Test
     assert last_response.body.include? "Logout"
   end
 
+  def test_users_can_logout
+    create_user!
+    post '/users/login', email: 'brit@kingcons.io', password: 'hunter2'
+
+    delete 'users/logout'
+    assert_equal last_response.status, 302
+    # assert last_response.body.include? "Login"
+    refute last_response.body.include? "Logout"
+  end
+
 end
 
