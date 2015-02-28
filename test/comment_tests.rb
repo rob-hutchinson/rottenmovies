@@ -1,15 +1,17 @@
 require 'minitest/autorun'
-require 'active_record'
-require './lib/all'
-require './rottenmovie'
+<<<<<<< HEAD
+require 'rack/test'
 
-require 'pry'
+# require 'active_record'
+require './rottenmovies'
 
 class CommentTest < MiniTest::Test
 
-  def setup
-    super
-    # User.create! email: 'brit@kingcons.io', password: 'hunter2', name: 'Brit Butler'
+
+ include Rack::Test::Methods
+
+  def app
+    Rottenmovies
   end
 
   def test_user_has_comments
