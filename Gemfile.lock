@@ -26,6 +26,7 @@ GEM
     arel (6.0.0)
     builder (3.2.2)
     coderay (1.1.0)
+    dotenv (1.0.2)
     httparty (0.13.3)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
@@ -54,6 +55,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  dotenv
   httparty
   minitest
   pry

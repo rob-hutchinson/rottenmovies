@@ -8,6 +8,7 @@ require './lib/all'
 
 class Rottenmovies < Sinatra::Base
   
+
   enable :sessions, :method_override
   set :session_secret, ENV.fetch('SESSION_SECRET', 'super_secret')
 
@@ -21,6 +22,12 @@ class Rottenmovies < Sinatra::Base
     end
   end
 
+   # This is just for testing:
+  def current_movie
+    m = Movie.last
+    return m
+  end
+
   # LOGIN_REQUIRED_ROUTES.each do |path|
   #   before path do
   #     if current_user.nil?
@@ -32,16 +39,18 @@ class Rottenmovies < Sinatra::Base
   # end
 
 
-  get '/' do
-    erb :home
-  end
 
    get '/users/login' do
     erb :login
   end
 
+ 
+  get '/' do
+    @movies = Movie.all # restrict to current month at some point?
+    erb :upcoming
+  end
+
   post '/users/login' do
-    
     user = User.where(
       email:    params[:email],
       password: Digest::SHA1.hexdigest(params[:password])
@@ -85,8 +94,12 @@ class Rottenmovies < Sinatra::Base
     erb :profile
   end
 
-  get 'movies' do
+  get '/movies' do
+    erb :movie
+  end
 
+  post '/movies' do
+    new_comment = Comment.create_comment!(params["comment_string"], current_user, current_movie)
     erb :movie
   end
 
@@ -97,4 +110,6 @@ class Rottenmovies < Sinatra::Base
 
 end
 
+
 Rottenmovies.run! if $PROGRAM_NAME == __FILE__
+
