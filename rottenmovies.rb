@@ -115,6 +115,24 @@ class Rottenmovies < Sinatra::Base
     redirect to "/movies/#{params['movie_rotten_id'].to_i}"
   end
 
+  patch '/movies' do
+    u = current_user
+    current_comment = u.comments.find_by(params["id"])
+    current_comment.edit_comment params["comment"]
+  end
+
+  get '/profile' do
+    erb :profile
+  end
+
+  # patch '/users/edit' do
+  #     u = current_user
+  #     present_params = params.select { |k,v| v != current_user[k] }
+  #     present_params.delete "_method"
+  #     u.update present_params if present_params.any?
+  #     redirect to('/users/profile')
+  # end
+
   not_found do
     status 404
     erb :nope
