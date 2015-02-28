@@ -125,6 +125,11 @@ class Rottenmovies < Sinatra::Base
     erb :profile
   end
 
+  post '/movies/:comment_id' do
+    c = Comment.find(:comment_id)
+    v = c.upvote! current_user
+  end
+
   # patch '/users/edit' do
   #     u = current_user
   #     present_params = params.select { |k,v| v != current_user[k] }
