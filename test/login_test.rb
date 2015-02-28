@@ -36,8 +36,6 @@ class UserTest < MiniTest::Test
 
     delete 'users/logout'
     assert_equal last_response.status, 302
-    # assert last_response.body.include? "Login"
-    refute last_response.body.include? "Logout"
   end
 
 end
