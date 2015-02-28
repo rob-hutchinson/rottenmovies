@@ -13,8 +13,8 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-1"><a href="/">Home</a></div>
+      <div class="col-sm-1"><a href="/users/login">Login</a></div>
       <div class="col-sm-1"><a href="/users/profile">Profile</a></div>
-      <div class="col-sm-1"><a href="/add_song">Comment</a></div>
       <div class="col-sm-1"><a href="/display">Movies</a></div>
       <% if current_user %>
         <div class="col-sm-4">
@@ -36,6 +36,7 @@
             <input name="password" type="password" class="form-control" id="input-password" placeholder="Password">
           </div>
           <button class="btn btn-primary">Login</button>
+        <a href="/create_account">Create Account</a>
         </form>
       </div>
       <% end %>
