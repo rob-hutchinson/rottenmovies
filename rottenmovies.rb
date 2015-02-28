@@ -111,6 +111,10 @@ class Rottenmovies < Sinatra::Base
     current_comment.edit_comment params["comment"]
   end
 
+  get '/profile' do
+    erb :profile
+  end
+
   # patch '/users/edit' do
   #     u = current_user
   #     present_params = params.select { |k,v| v != current_user[k] }
