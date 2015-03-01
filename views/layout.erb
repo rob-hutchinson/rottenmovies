@@ -18,6 +18,7 @@
         <li role="presentation"><a href="/">Home</a></li>
         <li role="presentation"><a href="/profile">Profile</a></li>
         <li role="presentation"><a href="/movies">Movies</a></li>
+        <li role="presentation"><a href="/create_account">Create Account</a></li>
       </ul>
     </div>
     <% if current_user %>
@@ -40,7 +41,6 @@
           <input name="password" type="password" class="form-control" id="input-password" placeholder="Password">
         </div>
         <button class="btn btn-primary">Login</button>
-        <a href="/create_account">Create Account</a>
       </form>
     </div>
     <% end %>
