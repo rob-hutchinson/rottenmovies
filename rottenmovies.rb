@@ -84,16 +84,16 @@ class Rottenmovies < Sinatra::Base
     begin
       if User.find_by(username: params["username"]) || User.find_by(email: params["email"])
         session[:error_message] = "User already exists."
-      elsif params["name"].empty? || params["email"].empty? || params["password"].empty?
-        session[:error_message] = "Name, email and password must be provided."
+      elsif params["name"].empty? || params["email"].empty? || params["password"].empty? || params["username"].empty?
+        session[:error_message] = "Name, username, email and password must be provided."
       else
         user = User.create!(name: params["name"], username: params["username"], email: params["email"], password: Digest::SHA1.hexdigest(params[:password]))
         session[:success_message] = "User account for #{user.name} created successfully. Account ID is #{user.id}."
       end
-      rescue
-        session[:error_message] = "User creation failed. Please try again."
-      ensure
-        redirect '/create_account'
+    rescue
+      session[:error_message] = "User creation failed. Please try again."
+    ensure
+      redirect to('users/login')
     end
   end
 
