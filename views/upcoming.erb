@@ -1,14 +1,9 @@
-<% if false %>
-<img src="<%= @movies.first.thumbnail %>" />
-<%= @movies.first.title %>
-<%= @movies.first.rotten_id %>
-<%= @movies.first.release_date %>
-<%= @movies.first.synopsis %>
-<% end %>
+<div class="page-header">
+  <h1>Upcoming Rotten Movies</h1>
+</div>
 
 
 <% @movies.each_slice(2) do |movie| %>
-<div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
       <div class="box">
@@ -48,5 +43,5 @@
     </div>
     <% end %>
   </div>
-</div>
+
 <% end %>

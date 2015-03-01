@@ -1,0 +1,29 @@
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover col-sm-12">
+      <thead>
+        <div class="page-header">
+          <h1>Rotten Movie Database<small></small></h1>
+        </div>     
+      </thead>
+      <tr>
+        <th>Rotten ID</th>
+        <th>Title</th>
+        <th>Release Date</th>
+        <th>Poster</th>
+        <th>Synopsis</th>
+      </tr>
+      <% if @movies != [] %>
+      <% @movies.each do |movie| %>
+      <tr>
+        <td><a href=<%= "/movies/#{movie.rotten_id}" %>><%= movie.rotten_id %></a></td>
+        <td><a href=<%= "/movies/#{movie.rotten_id}" %>><%= movie.title %></a></td>
+        <td><%= movie.release_date %></td>
+        <td><a href=<%= "./movies/#{movie.rotten_id}" %>><img src=<%= "#{movie.thumbnail}" %> /></a></td>
+        <td><%= movie.synopsis %></td>
+      </tr>
+      <% end %>
+      <% end %>
+    </table>
+</div>
+</div>

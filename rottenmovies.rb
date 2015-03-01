@@ -105,6 +105,7 @@ class Rottenmovies < Sinatra::Base
   end
 
   get '/movies' do
+    @movies = Movie.all.order(release_date: :desc, title: :asc)
     erb :movie
   end
 
