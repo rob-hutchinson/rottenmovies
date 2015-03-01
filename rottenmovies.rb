@@ -112,7 +112,8 @@ class Rottenmovies < Sinatra::Base
   get '/movies/:rotten_id' do
     @movie = Movie.find_by(rotten_id: params[:rotten_id])
     if @movie
-      @comments = Comment.where(movie_id: @movie.id)
+      @comments = Comment.where(movie_id: @movie.id).order(votes: :desc)
+      @upvotes = Upvote.all
       erb :movie_page
     else
       erb :nope
@@ -134,9 +135,21 @@ class Rottenmovies < Sinatra::Base
     erb :profile
   end
 
-  post '/movies/:comment_id' do
-    c = Comment.find(:comment_id)
-    v = c.upvote! current_user
+  post '/comments/:comment_id' do
+    c = Comment.find_by(id: params[:comment_id])
+    if params["name"] == "upvote"
+      u = Upvote.find_by(comment_id: c.id, user_id: c.user_id)
+      unless u
+        Upvote.create!(comment_id: c.id, user_id: c.user_id)
+      end
+    elsif params["name"] == "downvote"
+      u = Upvote.find_by(comment_id: c.id, user_id: c.user_id)
+      if u
+        u.delete
+      end
+    end
+    c.votes = Upvote.where(comment_id: c.id).count
+    redirect to "/movies/#{Movie.find_by(id: c.movie_id).rotten_id}"
   end
 
   # patch '/users/edit' do
