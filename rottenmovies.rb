@@ -82,10 +82,11 @@ class Rottenmovies < Sinatra::Base
 
   post '/create_account' do
     begin
+      val = Validation.new
       if User.find_by(username: params["username"]) || User.find_by(email: params["email"])
         session[:error_message] = "User already exists."
-      elsif params["name"].empty? || params["email"].empty? || params["password"].empty? || params["username"].empty?
-        session[:error_message] = "Name, username, email and password must be provided."
+      elsif params["name"].empty? || params["username"].empty? || !val.validate_email(params["email"]) || !val.validate_password(params["password"])
+        session[:error_message] = "Valid name, username, email and password must be provided."
       else
         user = User.create!(name: params["name"], username: params["username"], email: params["email"], password: Digest::SHA1.hexdigest(params[:password]))
         session[:success_message] = "User account for #{user.name} created successfully. Account ID is #{user.id}."
