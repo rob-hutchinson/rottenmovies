@@ -10,4 +10,10 @@ class Comment < ActiveRecord::Base
     end
   end
 
+  def upvote! current_user
+    unless current_user.upvotes != []
+      current_user.upvotes << (Upvote.create! comment_id: self.id, user_id: current_user.id)
+    end
+  end
+
 end
