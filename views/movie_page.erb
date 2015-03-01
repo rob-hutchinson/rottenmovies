@@ -58,7 +58,10 @@
                     <%= comment.comment %>
                   </p>
                 </div>
-                <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i>Edit Post</a></p>
+                <% if current_user != nil && comment.user_id == current_user.id %>
+               <form action='/movies/<%= comment.id %>/edit' method='GET' id="comment_form">
+               <p class="text-right"><button type="edit" class="btn btn-default btn-sm"><i class="fa fa-reply"></i>Edit Post</p>
+                <% end %>
               </div>
             </div>
           </div>
