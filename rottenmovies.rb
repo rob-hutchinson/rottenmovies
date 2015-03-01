@@ -38,13 +38,10 @@ class Rottenmovies < Sinatra::Base
   #   end
   # end
 
-
-
    get '/users/login' do
     erb :login
   end
 
- 
   get '/' do
     # Movie.generate_upcoming_movie_list! 
     # comment out if you need to generate a movie list.
@@ -68,7 +65,7 @@ class Rottenmovies < Sinatra::Base
       redirect to('/')
       # end
     else
-      session[:error_message] = "Wrong. Try again."
+      session[:error_message] = "Nope. Try again."
       status 422
       erb :login
     end
@@ -79,16 +76,27 @@ class Rottenmovies < Sinatra::Base
     redirect to('/')
   end
   
+  get '/create_account' do
+    erb :create_account
+  end
+
   post '/create_account' do
-    # ensure_admin!
-    # raise "This doesn't work ... we mail the encrypted passwords"
     begin
-     user = User.create!(name: params["name"], email: params["email"], password: Digest::SHA1.hexdigest(params[:password]))
-      session[:success_message] = "User account for #{user.name} created successfully. Account ID is #{user.id}."
+      val = Validation.new
+      if User.find_by(username: params["username"]) || User.find_by(email: params["email"])
+        session[:error_message] = "User already exists."
+      elsif params["name"].empty? || params["username"].empty? || !val.validate_email(params["email"]) || !val.validate_password(params["password"])
+        session[:error_message] = "Valid name, username, email and password must be provided. Password must be 8 characters or more."
+      else
+        user = User.create!(name: params["name"], username: params["username"], email: params["email"], password: Digest::SHA1.hexdigest(params[:password]))
+        session[:success_message] = "User account for #{user.name} created successfully. Account ID is #{user.id}."
+        redirect to('/users/login')
+        return
+      end
     rescue
       session[:error_message] = "User creation failed. Please try again."
     ensure
-      redirect '/create_account'
+      redirect to('/create_account')
     end
   end
 
