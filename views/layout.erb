@@ -40,9 +40,12 @@
           <input name="password" type="password" class="form-control" id="input-password" placeholder="Password">
         </div>
         <button class="btn btn-primary">Login</button>
+        <a href="/create_account">Create Account</a>
       </form>
     </div>
     <% end %>
+    </div>  
+  </div>
 
     <% if session["error_message"] %>
     <div>
@@ -50,6 +53,7 @@
       <% session.delete("error_message") %>
     </div>
     <% end %> 
+    
     <% if session["success_message"] %>
     <div>
       <div class="alert alert-success" role="alert"><%= session["success_message"] %></div>
