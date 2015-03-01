@@ -3,7 +3,7 @@
 # Validation on email and password and, to a degreee, user name
 
 class Validation
-  attr_reader :email_re :password_re
+  attr_reader :email_re, :password_re
   def initialize
     # Overkill. Basic is: /.+@.+\..+/i
     @email_re = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
