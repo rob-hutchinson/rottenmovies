@@ -116,9 +116,32 @@ class Rottenmovies < Sinatra::Base
   end
 
   post '/movies' do
-    new_comment = Comment.create_comment!(params["comment_string"], current_user, current_movie)
-    erb :movie
+    Comment.create!(comment: params["comment"], user_id: current_user.id, movie_id: params["movie_id"].to_i, title: params["title"])
+    redirect to "/movies/#{params['movie_rotten_id'].to_i}"
   end
+
+  patch '/movies' do
+    u = current_user
+    current_comment = u.comments.find_by(params["id"])
+    current_comment.edit_comment params["comment"]
+  end
+
+  get '/profile' do
+    erb :profile
+  end
+
+  post '/movies/:comment_id' do
+    c = Comment.find(:comment_id)
+    v = c.upvote! current_user
+  end
+
+  # patch '/users/edit' do
+  #     u = current_user
+  #     present_params = params.select { |k,v| v != current_user[k] }
+  #     present_params.delete "_method"
+  #     u.update present_params if present_params.any?
+  #     redirect to('/users/profile')
+  # end
 
   not_found do
     status 404
