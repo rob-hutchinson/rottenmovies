@@ -148,7 +148,7 @@ class Rottenmovies < Sinatra::Base
         u.delete
       end
     end
-    c.votes = Upvote.where(comment_id: c.id).count
+    c.update(votes: Upvote.where(comment_id: c.id).count)
     redirect to "/movies/#{Movie.find_by(id: c.movie_id).rotten_id}"
   end
 

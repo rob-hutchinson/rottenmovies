@@ -7,7 +7,7 @@ class Comment < ActiveRecord::Base
   after_initialize :defaults
 
   def defaults
-    self.upvotes ||= 0
+    self.votes ||= 0
   end
 
 
