@@ -1,0 +1,53 @@
+<div class="container">
+	<div class="col-sm-10">
+		<h2>Edit Your Profile<small></small></h2>
+		<p class="lead">Input data into the fields where you want your data overwritten.</p>
+		<form class="form-horizontal" action="/profile/edit" method="POST" role="form">
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Username</label>
+				<div class="col-sm-6">
+					<p class="form-control-static"><%= current_user.name %></p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Email</label>
+				<div class="col-sm-6">
+					<p class="form-control-static"><%= current_user.email %></p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="avatar_url" class="col-sm-2 control-label">Avatar URL</label>
+				<div class="col-sm-6">
+					<input class="form-control" name="avatar_url" value="<%= current_user.avatar_url %>">
+				</div>
+				<p class="help-block">Right click any image and select "Copy Image URL".</p>
+			</div>
+
+			<div class="form-group">
+				<label for="location" class="col-sm-2 control-label">Location</label>
+				<div class="col-sm-6">
+					<input class="form-control" name="location" value="<%= current_user.location %>">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="bio" class="col-sm-2 control-label">Short Bio</label>
+				<div class="col-sm-6">
+					<textarea class="form-control" placeholder="Type in something about yourself here." rows=4 name="bio" id="bio"><%= current_user.bio %></textarea>
+				</div>
+			</div>
+
+			<input type="hidden" name="_method" value="PATCH">
+
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-8">
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+			</div>
+
+		</form>
+	</div>
+</div>

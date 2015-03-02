@@ -169,13 +169,16 @@ class Rottenmovies < Sinatra::Base
     redirect to "/movies/#{Movie.find_by(id: c.movie_id).rotten_id}"
   end
 
-  # patch '/users/edit' do
-  #     u = current_user
-  #     present_params = params.select { |k,v| v != current_user[k] }
-  #     present_params.delete "_method"
-  #     u.update present_params if present_params.any?
-  #     redirect to('/users/profile')
-  # end
+  get '/profile/edit' do
+    erb :user_profile_edit
+  end
+
+  patch '/profile/edit' do
+    present_params = params.select { |k,v| v != current_user[k] }
+    present_params.delete "_method"
+    current_user.update present_params if present_params.any?
+    redirect to('/profile')
+  end
 
   not_found do
     status 404
