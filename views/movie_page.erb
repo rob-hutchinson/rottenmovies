@@ -41,7 +41,7 @@
         <% @comments.each do |comment| %>
       
         <article class="row">        
-          <div class="col-md-3 col-sm-3 hidden-xs">
+          <div class="upvote-container col-md-3 col-sm-3 hidden-xs">
         
             <form method="POST" action=<%= "/comments/#{comment.id}" %>>
               <input type="hidden" name="name" value="upvote">
@@ -64,6 +64,7 @@
               <figcaption class="text-center"><%= User.find_by(id: comment.user_id).name %></figcaption>
             </figure>
           </div>
+
           <div class="col-md-9 col-sm-9">
             <div class="panel panel-default arrow left">
               <div class="panel-body">
