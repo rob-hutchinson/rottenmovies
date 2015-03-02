@@ -13,9 +13,9 @@ class Rottenmovies < Sinatra::Base
   enable :sessions, :method_override
   set :session_secret, ENV.fetch('SESSION_SECRET', 'super_secret')
 
-  # LOGIN_REQUIRED_ROUTES = [
-  #   "/comments"
-  # ]
+  LOGIN_REQUIRED_ROUTES = [
+    "/profile"
+  ]
 
   def current_user
     if session[:user_id]
@@ -29,15 +29,15 @@ class Rottenmovies < Sinatra::Base
     return m
   end
 
-  # LOGIN_REQUIRED_ROUTES.each do |path|
-  #   before path do
-  #     if current_user.nil?
-  #       session[:error_message] = "You must log in to see this feature."
-  #       session[:return_trip] = path
-  #       redirect to('/users/login')
-  #     end
-  #   end
-  # end
+  LOGIN_REQUIRED_ROUTES.each do |path|
+    before path do
+      if current_user.nil?
+        session[:error_message] = "You must log in to see this feature."
+        session[:return_trip] = path
+        redirect to('/users/login')
+      end
+    end
+  end
 
   get '/users/login' do
     erb :login
@@ -58,13 +58,13 @@ class Rottenmovies < Sinatra::Base
 
     if user
       session[:user_id] = user.id
-      # if session["return_trip"]
-      #   path = session["return_trip"]
-      #   session.delete("return_trip")
-      #   redirect to(path)
-      # else
+      if session["return_trip"]
+        path = session["return_trip"]
+        session.delete("return_trip")
+        redirect to(path)
+      else
       redirect to('/')
-      # end
+      end
     else
       session[:error_message] = "Nope. Try again."
       status 422
