@@ -10,11 +10,4 @@ class Comment < ActiveRecord::Base
     self.votes ||= 0
   end
 
-
-  def edit_comment new_comment
-    if new_comment != self.comment
-      self.update! comment: new_comment
-    end
-  end
-
 end
