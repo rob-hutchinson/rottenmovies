@@ -38,7 +38,7 @@ class Rottenmovies < Sinatra::Base
   #   end
   # end
 
-   get '/users/login' do
+  get '/users/login' do
     erb :login
   end
 
@@ -112,7 +112,8 @@ class Rottenmovies < Sinatra::Base
   get '/movies/:rotten_id' do
     @movie = Movie.find_by(rotten_id: params[:rotten_id])
     if @movie
-      @comments = Comment.where(movie_id: @movie.id)
+      @comments = Comment.where(movie_id: @movie.id).order(votes: :desc)
+      @upvotes = Upvote.all
       erb :movie_page
     else
       erb :nope
@@ -124,19 +125,47 @@ class Rottenmovies < Sinatra::Base
     redirect to "/movies/#{params['movie_rotten_id'].to_i}"
   end
 
-  patch '/movies' do
-    u = current_user
-    current_comment = u.comments.find_by(params["id"])
-    current_comment.edit_comment params["comment"]
+  get '/movies/:comment_id/edit' do
+    if current_user.id == Comment.find(params[:comment_id]).user_id
+      session[:return_trip] = "#{Movie.find_by(id: current_user.comments.find(params[:comment_id]).movie_id).rotten_id}"
+      erb :edit_comment
+    else
+      session[:error_message] = "Sorry, this is not your comment!"
+      redirect to "/movies/:rotten_id"
+    end
   end
 
+  patch '/movies/:comment_id/edit' do
+    if current_user.id == Comment.find(params[:comment_id]).user_id
+      Comment.find(params[:comment_id]).update(comment: params["comment"], title: params["title"])
+      path = session["return_trip"]
+      session.delete("return_trip")
+      redirect to "/movies/#{path}"
+    else
+      session[:error_message] = "Sorry, this is not your comment!"
+      redirect to '/movies'
+    end
+  end
+  
   get '/profile' do
     erb :profile
   end
 
-  post '/movies/:comment_id' do
-    c = Comment.find(:comment_id)
-    v = c.upvote! current_user
+  post '/comments/:comment_id' do
+    c = Comment.find_by(id: params[:comment_id])
+    if params["name"] == "upvote"
+      u = Upvote.find_by(comment_id: c.id, user_id: c.user_id)
+      unless u
+        Upvote.create!(comment_id: c.id, user_id: c.user_id)
+      end
+    elsif params["name"] == "downvote"
+      u = Upvote.find_by(comment_id: c.id, user_id: c.user_id)
+      if u
+        u.delete
+      end
+    end
+    c.update(votes: Upvote.where(comment_id: c.id).count)
+    redirect to "/movies/#{Movie.find_by(id: c.movie_id).rotten_id}"
   end
 
   # patch '/users/edit' do

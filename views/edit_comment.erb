@@ -1,0 +1,22 @@
+<div class="container">
+
+  <div class="row col-sm-offset-2 col-md-offset-2 col-lg-offset-2 col-xs-12 col-sm-8 col-md-8 col-lg-8">
+
+    <form class="form-horizontal" action="/movies/<%= params[:comment_id] %>/edit" method="POST" role="form">
+
+    <h2> Edit your comment </h2>
+    <br>
+
+    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+
+      <div class="form-group">
+          <input class="form-group" type="text" name="title" value=<%= Comment.find(params[:comment_id]).title %>>
+          <textarea class="form-control" rows=4 name="comment"><%= Comment.find(params[:comment_id]).comment %></textarea>
+          <input type="hidden" name="_method" value="PATCH">
+          <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    
+    </div>
+    </form>
+  </div>
+</div>
