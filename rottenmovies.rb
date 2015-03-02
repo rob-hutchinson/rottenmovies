@@ -7,7 +7,8 @@ require './lib/all'
 
 
 class Rottenmovies < Sinatra::Base
-  
+  set :bind, '0.0.0.0'
+  set :port, '3000'
 
   enable :sessions, :method_override
   set :session_secret, ENV.fetch('SESSION_SECRET', 'super_secret')
