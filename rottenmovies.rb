@@ -175,7 +175,7 @@ class Rottenmovies < Sinatra::Base
   patch '/profile/edit' do
     present_params = params.select { |k,v| v != current_user[k] }
     present_params.delete "_method"
-    u.update present_params if present_params.any?
+    current_user.update present_params if present_params.any?
     redirect to('/profile')
   end
 
