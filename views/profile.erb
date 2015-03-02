@@ -2,12 +2,11 @@
 	<div class="col-sm-5">
 		<div class="row">
 			<div class="page-header">
-  			<h2><%= current_user.name %>'s Profile Info: <small></small></h2>
+				<h2><%= current_user.name %>'s Profile Info: <small></small></h2>
 			</div>
 
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<!-- <p class="lead"><strong>Avatar: </strong><%= current_user.avatar_url %></p> -->
 
 					<p class="lead"><strong>Email: </strong><%= current_user.email %></p>
 					
@@ -28,33 +27,22 @@
 		</div>
 	</div>
 
-	<!-- <div class="col-sm-offset-1 col-md-2">
-			<div class="row">
-
-				<div class="page-header">
-	  			<h2>Filler<small></small></h2>
-				</div>
-				<div class="panel panel-default">
-					<ul class="list-group">
-					  <li class="list-group-item"><span class="badge">current user info post count?</span></li>
-					</ul>
-				</div>
-		</div>
-	</div> -->
-
 	<div class="col-sm-offset-1 col-md-5">
 		<div class="page-header">
-			<h2>Last Comment:<small></small></h2>
+			<h2>Last Comments:<small></small></h2>
 		</div>
-			<div class="panel panel-default">
-					<div class="panel-body">
-						<p class="lead"><small><%= current_user.comments.last.comment %></small></p>
-						<p><a href= "http://localhost:4567/movies/<%= Movie.find_by(id: current_user.comments.last.movie_id).rotten_id %>">movie comment thread</a></p>
+		
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<% current_user.comments.last(5).each do |x| %>
+				<p><%= x.comment %></p>
+				<p><a href="/movies/<%= Movie.find_by(id: current_user.comments.last.movie_id).rotten_id %>">Movie Page</a></p>
+				<% end %>
 
-					</div>
-				</div>
+
 			</div>
 		</div>
-
 	</div>
+</div>
+</div>
 </div>
