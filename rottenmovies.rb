@@ -38,7 +38,7 @@ class Rottenmovies < Sinatra::Base
   #   end
   # end
 
-   get '/users/login' do
+  get '/users/login' do
     erb :login
   end
 
@@ -125,12 +125,28 @@ class Rottenmovies < Sinatra::Base
     redirect to "/movies/#{params['movie_rotten_id'].to_i}"
   end
 
-  patch '/movies' do
-    u = current_user
-    current_comment = u.comments.find_by(params["id"])
-    current_comment.edit_comment params["comment"]
+  get '/movies/:comment_id/edit' do
+    if current_user.id == Comment.find(params[:comment_id]).user_id
+      session[:return_trip] = "#{Movie.find_by(id: current_user.comments.find(params[:comment_id]).movie_id).rotten_id}"
+      erb :edit_comment
+    else
+      session[:error_message] = "Sorry, this is not your comment!"
+      redirect to "/movies/:rotten_id"
+    end
   end
 
+  patch '/movies/:comment_id/edit' do
+    if current_user.id == Comment.find(params[:comment_id]).user_id
+      Comment.find(params[:comment_id]).update(comment: params["comment"], title: params["title"])
+      path = session["return_trip"]
+      session.delete("return_trip")
+      redirect to "/movies/#{path}"
+    else
+      session[:error_message] = "Sorry, this is not your comment!"
+      redirect to '/movies'
+    end
+  end
+  
   get '/profile' do
     erb :profile
   end
